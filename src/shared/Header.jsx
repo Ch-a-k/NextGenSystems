@@ -17,7 +17,7 @@ export default function Header() {
   const { openContact } = useContactModal();
   return (
     <header className="sticky top-0 z-40 border-b border-white/10 bg-[rgba(11,14,20,0.7)] backdrop-blur">
-      <div className="container-base flex h-16 items-center justify-between">
+      <div className="container-base flex h-14 sm:h-16 items-center justify-between">
         <Link href="/" className="flex items-center gap-2 hover-link">
           <Image src="/logo.png" alt="NextGen Systems" width={32} height={32} className="h-8 w-8" priority />
           <span className="text-base font-semibold tracking-tight">NextGen Systems</span>
