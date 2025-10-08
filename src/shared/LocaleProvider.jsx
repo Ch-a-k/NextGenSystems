@@ -7,7 +7,7 @@ export function useLocale() {
 }
 
 export default function LocaleProvider({ children }) {
-  const [locale, setLocaleState] = useState("en");
+  const [locale, setLocaleState] = useState("ur");
 
   const setLocale = useCallback((newLocale) => {
     setLocaleState(newLocale);
@@ -24,6 +24,10 @@ export default function LocaleProvider({ children }) {
       const saved = localStorage.getItem("locale");
       if (saved && (saved === "en" || saved === "ur")) {
         setLocale(saved);
+      } else {
+        // Set initial direction for Urdu
+        document.documentElement.lang = "ur";
+        document.documentElement.dir = "rtl";
       }
     }
   }, [setLocale]);
