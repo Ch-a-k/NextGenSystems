@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Layout from "../shared/Layout";
 import FakeActionProvider from "../shared/FakeActionProvider";
 import ContactModalProvider from "../shared/ContactModalProvider";
+import LocaleProvider from "../shared/LocaleProvider";
 
 const geistSans = Geist({ subsets: ["latin"], variable: "--font-geist-sans" });
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" });
@@ -19,13 +20,15 @@ export default function App({ Component, pageProps }) {
           content="NextGen Systems provides strategy, operations, and technology consulting for modern enterprises. Subscriptions and value-based fee models."
         />
       </Head>
-      <FakeActionProvider>
-        <ContactModalProvider>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </ContactModalProvider>
-      </FakeActionProvider>
+      <LocaleProvider>
+        <FakeActionProvider>
+          <ContactModalProvider>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </ContactModalProvider>
+        </FakeActionProvider>
+      </LocaleProvider>
     </div>
   );
 }

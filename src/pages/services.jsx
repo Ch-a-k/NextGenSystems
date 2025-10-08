@@ -1,43 +1,18 @@
 import { useContactModal } from "@/shared/ContactModalProvider";
+import { useLocale } from "@/shared/LocaleProvider";
+import { servicesData } from "@/data/servicesData";
 
 export default function Services() {
   const { openContact } = useContactModal();
-  const services = [
-    {
-      title: "Corporate Strategy",
-      desc: "Define ambition, portfolio bets, and value creation thesis with measurable horizons.",
-      bullets: [
-        "North Star + strategic roadmaps",
-        "M&A, divestitures, and partnerships",
-        "Operating cadence and KPIs",
-      ],
-    },
-    {
-      title: "Operating Model & PMO",
-      desc: "Redesign processes, governance, and PMO to deliver outcomes at speed.",
-      bullets: [
-        "Org and role clarity",
-        "Process and control re-architecture",
-        "Program governance and PMO",
-      ],
-    },
-    {
-      title: "Data, AI & Automation",
-      desc: "Build AI-ready data foundations and embed analytics into decision cycles.",
-      bullets: [
-        "Modern data platforms",
-        "Information quality and lineage",
-        "Applied analytics and automation",
-      ],
-    },
-  ];
+  const { t, locale } = useLocale();
+  const services = servicesData[locale];
 
   return (
     <div className="section-bg-b">
       <div className="container-base py-16 sm:py-24">
-      <h1 className="section-title">Services</h1>
+      <h1 className="section-title">{t("services.title")}</h1>
       <p className="mt-3 max-w-2xl text-white/80">
-        Engagements available as subscriptions (retainer) or outcome-linked fee models.
+        {t("services.subtitle")}
       </p>
       <div className="mt-8 grid gap-6 sm:grid-cols-3">
         {services.map((s) => (
@@ -50,7 +25,7 @@ export default function Services() {
               ))}
             </ul>
             <div className="mt-5">
-              <button className="btn-primary hover-border" onClick={() => openContact(`Service: ${s.title}`)}>Request info</button>
+              <button className="btn-primary hover-border" onClick={() => openContact(`Service: ${s.title}`)}>{t("services.requestInfo")}</button>
             </div>
           </div>
         ))}

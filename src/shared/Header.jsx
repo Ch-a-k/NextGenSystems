@@ -2,19 +2,21 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { useContactModal } from "./ContactModalProvider";
+import { useLocale } from "./LocaleProvider";
 
 const nav = [
-  { href: "/services", label: "Services" },
-  { href: "/industries", label: "Industries" },
-  { href: "/solutions", label: "Solutions" },
-  { href: "/about", label: "About" },
-  { href: "/careers", label: "Careers" },
-  { href: "/contact", label: "Contact" },
+  { href: "/services", labelKey: "nav.services" },
+  { href: "/industries", labelKey: "nav.industries" },
+  { href: "/solutions", labelKey: "nav.solutions" },
+  { href: "/about", labelKey: "nav.about" },
+  { href: "/careers", labelKey: "nav.careers" },
+  { href: "/contact", labelKey: "nav.contact" },
 ];
 
 export default function Header() {
   const [open, setOpen] = useState(false);
   const { openContact } = useContactModal();
+  const { locale, setLocale, t } = useLocale();
   return (
     <>
       <header className="sticky top-0 z-40 border-b border-white/10 bg-[rgba(11,14,20,0.7)] backdrop-blur">
@@ -26,16 +28,23 @@ export default function Header() {
         <nav className="hidden gap-6 lg:flex">
           {nav.map((n) => (
             <Link key={n.href} href={n.href} className="text-sm text-white/80 hover-link">
-              {n.label}
+              {t(n.labelKey)}
             </Link>
           ))}
         </nav>
         <div className="flex items-center gap-3">
+          <button
+            className="hidden lg:inline-flex items-center gap-1 rounded-md border border-white/15 bg-white/5 px-2 py-1 text-xs text-white hover:bg-white/10"
+            onClick={() => setLocale(locale === "en" ? "ur" : "en")}
+            title="Switch language"
+          >
+            {locale === "en" ? "اردو" : "EN"}
+          </button>
           <a className="btn-secondary hover-border hidden lg:inline-flex" href="mailto:info@nextgensystems.com">
-            Work with us
+            {t("header.workWithUs")}
           </a>
           <button className="btn-primary hidden lg:inline-flex hover-border" onClick={() => openContact("Getting started") }>
-            Get Started
+            {t("header.getStarted")}
           </button>
           <button
             className="lg:hidden inline-flex items-center justify-center rounded-md border border-white/15 bg-white/5 p-2 text-white hover:bg-white/10"
@@ -63,9 +72,23 @@ export default function Header() {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Image src="/logo.png" alt="NextGen Systems" width={28} height={28} className="h-7 w-7" />
-                <span className="text-base font-semibold">Menu</span>
+                <span className="text-base font-semibold">{t("header.menu")}</span>
               </div>
               <button aria-label="Close menu" className="text-white/80 hover:text-white" onClick={() => setOpen(false)}>✕</button>
+            </div>
+            <div className="mt-4 flex items-center justify-center gap-2">
+              <button
+                className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${locale === "en" ? "bg-brand-500 text-white" : "bg-white/10 text-white/70 hover:bg-white/15"}`}
+                onClick={() => { setLocale("en"); }}
+              >
+                English
+              </button>
+              <button
+                className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${locale === "ur" ? "bg-brand-500 text-white" : "bg-white/10 text-white/70 hover:bg-white/15"}`}
+                onClick={() => { setLocale("ur"); }}
+              >
+                اردو
+              </button>
             </div>
             <nav className="mt-6 grid gap-3">
               {nav.map((n) => (
@@ -75,16 +98,16 @@ export default function Header() {
                   className="rounded-xl border border-white/20 bg-[#101626]/90 px-4 py-3 text-white shadow-lg shadow-black/30 hover:border-white/30 hover:bg-[#121a2b]/95"
                   onClick={() => setOpen(false)}
                 >
-                  {n.label}
+                  {t(n.labelKey)}
                 </Link>
               ))}
             </nav>
             <div className="mt-6 grid gap-3">
               <a href="mailto:info@nextgensystems.com" className="btn-secondary hover-border w-full text-center bg-[#101626]/90 border-white/20 hover:bg-[#121a2b]/95" onClick={() => setOpen(false)}>
-                Work with us
+                {t("header.workWithUs")}
               </a>
               <button className="btn-primary hover-border w-full" onClick={() => { setOpen(false); openContact("Getting started"); }}>
-                Get Started
+                {t("header.getStarted")}
               </button>
             </div>
           </div>
